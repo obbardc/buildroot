@@ -1,0 +1,63 @@
+From 7dee866174af2116555723f8442cd63449463f92 Mon Sep 17 00:00:00 2001
+From: Tobias Schaffner <tobias.schaffner@siemens.com>
+Date: Thu, 16 May 2024 13:47:07 +0200
+Subject: [PATCH 3/6] w83627hf: Add station id of IPC BX-56A
+
+The simatic IPC BX-56A shares the same nct6116 superio chip as the
+BX-59A. Allow efibootguard to configure the w83627hf watchdog for BX-56A
+by adding its station id.
+
+Signed-off-by: Tobias Schaffner <tobias.schaffner@siemens.com>
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+---
+ README.md                       | 2 +-
+ drivers/watchdog/w83627hf_wdt.c | 3 ++-
+ include/simatic.h               | 1 +
+ 3 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/README.md b/README.md
+index ef8a2fe..5ac1527 100644
+--- a/README.md
++++ b/README.md
+@@ -33,7 +33,7 @@ The following watchdog drivers are implemented (and are probed in this order):
+ * Intel i6300esb
+ * Intel Quark
+ * Siemens SIMATIC IPC4x7E
+-* Siemens SIMATIC BX-59A
++* Siemens SIMATIC BX-56A and BX-59A
+ * Intel TCO
+ * HPE ProLiant
+ 
+diff --git a/drivers/watchdog/w83627hf_wdt.c b/drivers/watchdog/w83627hf_wdt.c
+index df1da11..fd2950d 100644
+--- a/drivers/watchdog/w83627hf_wdt.c
++++ b/drivers/watchdog/w83627hf_wdt.c
+@@ -208,11 +208,12 @@ static EFI_STATUS init(EFI_PCI_IO *pci_io, UINT16 pci_vendor_id,
+ 	}
+ 
+ 	switch (simatic_station_id()) {
++	case SIMATIC_IPCBX_56A:
+ 	case SIMATIC_IPCBX_59A:
+ 		chip = wdt_find(0x2e);
+ 		if (chip < 0)
+ 			return EFI_UNSUPPORTED;
+-		INFO(L"Detected SIMATIC BX59A watchdog\n");
++		INFO(L"Detected SIMATIC BX5xA watchdog\n");
+ 		ret = w83627hf_init(chip);
+ 		if (ret < 0)
+ 			return EFI_UNSUPPORTED;
+diff --git a/include/simatic.h b/include/simatic.h
+index 724e79d..43c5515 100644
+--- a/include/simatic.h
++++ b/include/simatic.h
+@@ -25,6 +25,7 @@
+ 
+ #define SIMATIC_IPC427E				0x0a01
+ #define SIMATIC_IPC477E				0x0a02
++#define SIMATIC_IPCBX_56A			0x1201
+ #define SIMATIC_IPCBX_59A			0x1202
+ 
+ typedef struct {
+-- 
+2.45.1
+
