@@ -1,0 +1,37 @@
+config BR2_TARGET_EFIBOOTGUARD_ARCH_SUPPORTS
+	bool
+	default y if BR2_x86_64
+	depends on BR2_USE_MMU
+
+config BR2_TARGET_EFIBOOTGUARD
+	bool "efibootguard"
+	depends on BR2_TARGET_EFIBOOTGUARD_ARCH_SUPPORTS
+	depends on BR2_USE_WCHAR
+	select BR2_PACKAGE_GNU_EFI
+	select BR2_PACKAGE_PCIUTILS if BR2_TARGET_EFIBOOTGUARD_INSTALL_TOOLS
+	help
+	  EFI Boot Guard is a UEFI bootloader intended for robust
+	  A/B style updates. It arms a hardware watchdog before
+	  handing over control to the OS and supports a fail-safe
+	  boot mechanism to roll back if a boot attempt fails.
+
+	  https://github.com/siemens/efibootguard
+
+if BR2_TARGET_EFIBOOTGUARD
+
+config BR2_TARGET_EFIBOOTGUARD_X86_64
+	bool "x86-64"
+	depends on BR2_x86_64
+	help
+	  Select this option if the platform you're targeting has a
+	  64 bits EFI BIOS.
+
+config BR2_TARGET_EFIBOOTGUARD_INSTALL_TOOLS
+	bool "install tools"
+	help
+	  Install the efibootguard user-space tools (e.g.
+	  bg_printenv and bg_setenv) on the target. These tools
+	  allow reading and updating efibootguard's configuration
+	  in user-space.
+
+endif # BR2_TARGET_EFIBOOTGUARD

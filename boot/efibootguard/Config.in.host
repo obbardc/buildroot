@@ -1,0 +1,8 @@
+config BR2_TARGET_HOST_EFIBOOTGUARD
+	bool "host efibootguard"
+	help
+	  Build efibootguard companion tools for the host. These
+	  can be used during image creation to inspect and
+	  modify the efibootguard configuration data.
+
+	  https://github.com/siemens/efibootguard
