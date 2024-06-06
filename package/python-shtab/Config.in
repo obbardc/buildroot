@@ -1,0 +1,3 @@
+config BR2_PACKAGE_PYTHON_SHTAB
+	bool "python-shtab"
+	help

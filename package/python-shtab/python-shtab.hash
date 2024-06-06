@@ -1,0 +1,5 @@
+# md5, sha256 from https://pypi.org/pypi/shtab/json
+md5  da7bd07a2b2888974d6bf5c4ea70cdcf  shtab-1.7.1.tar.gz
+sha256  4e4bcb02eeb82ec45920a5d0add92eac9c9b63b2804c9196c1f1fdc2d039243c  shtab-1.7.1.tar.gz
+# Locally computed sha256 checksums
+sha256  5f92c4df863a4b815435cfcfcca3581a6bfd03d183d51438fef450dea5bedb84  LICENCE
