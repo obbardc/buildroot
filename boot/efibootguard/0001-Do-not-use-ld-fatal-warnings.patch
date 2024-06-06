@@ -1,0 +1,32 @@
+Date: Tue, 7 May 2024 09:36:45 +0200
+From: Bastian Germann <bage@debian.org>
+Subject: Do not use ld fatal-warnings
+
+fatal-warnings are almost guaranteed to break the build when using a more
+recent linker than the upstream developers. Get rid of them so the package
+can be built with some warnings and be maintained sanely in the long run.
+
+Upstream: N/A; not suitable for upstream, which intentionally relies on
+--fatal-warnings. Taken from Debian (Forwarded: not-needed):
+https://salsa.debian.org/debian/efibootguard/-/blob/master/debian/patches/Do-not-use-ld-fatal-warnings.patch
+
+Signed-off-by: Christopher Obbard <obbardc@gmail.com>
+---
+ Makefile.am | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index c7aed67..b27ea87 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -293,7 +293,6 @@ efi_ldflags = \
+ 	-z max-page-size=4096 \
+ 	--warn-common \
+ 	--no-undefined \
+-	--fatal-warnings \
+ 	$(LDFLAGS_NO_WARN_RWX_SEGMENTS) \
+ 	-L $(GNUEFI_LIB_DIR) \
+ 	$(GNUEFI_LIB_DIR)/crt0-efi-$(ARCH).o
+-- 
+2.43.0
+
