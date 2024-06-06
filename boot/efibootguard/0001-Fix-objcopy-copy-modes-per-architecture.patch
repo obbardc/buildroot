@@ -1,0 +1,74 @@
+From 2cd814f23aa68a56845c2b081596eb7495250a13 Mon Sep 17 00:00:00 2001
+From: Christian Storm <christian.storm@siemens.com>
+Date: Mon, 13 May 2024 15:23:11 +0200
+Subject: [PATCH 1/6] Fix objcopy copy modes per architecture
+
+Use objcopy with target=efi-app for
+* x86 across the board(s)
+* aarch64 with gnu-efi > 3.0.15
+
+Use objcopy with binary copy mode for
+* arm
+* riscv64
+* aarch64 with gnu-efi = 3.0.15
+
+This list is compiled from gnu-efi's gnuefi/crt0-efi-<ARCH>.S
+assembler files over the releases 3.0.15 to 3.0.18.
+If the respective file contains the PE/COFF header definition,
+objcopy with binary copy mode has to be used. Else, objcopy
+with target=efi-app has to be used.
+
+Signed-off-by: Christian Storm <christian.storm@siemens.com>
+Tested-by: Quirin Gylstorff <quirin.gylstorff@siemens.com>
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+---
+ Makefile.am  |  6 +++---
+ configure.ac | 12 ++++++++----
+ 2 files changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 9bff305..0bd2dec 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -246,11 +246,11 @@ efi_ldflags = \
+ if ARCH_IS_X86
+ objcopy_format = --target=efi-app-$(ARCH)
+ else
+-if OBJCOPY_USE_EFI_APP_TARGET
+-objcopy_format = --target=efi-app-$(ARCH)
+-else
++if OBJCOPY_USE_BINARY_COPY
+ objcopy_format = -O binary
+ efi_ldflags += --defsym=EFI_SUBSYSTEM=0xa
++else
++objcopy_format = --target=efi-app-$(ARCH)
+ endif
+ endif
+ 
+diff --git a/configure.ac b/configure.ac
+index 7112b3c..e58065f 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -237,11 +237,15 @@ fi
+ AC_SUBST([GNU_EFI_VERSION], [$(($PKG_CONFIG --modversion "gnu-efi" 2>/dev/null || echo 0) | $TR -d '.' )])
+ 
+ AC_SUBST([OBJCOPY_HAS_EFI_APP_TARGET], [$($OBJCOPY --info | $GREP -q pei- 2>/dev/null && echo "true")])
+-if test -z $OBJCOPY_HAS_EFI_APP_TARGET && test $GNU_EFI_VERSION -gt 0; then
+-	AC_MSG_ERROR([objcopy doesn't support --target=efi-app but gnu-efi >= 3.0.16])
++
++# Use objcopy -O binary on riscv64, arm, and aarch64 with gnu-efi 3.0.15
++AM_CONDITIONAL([OBJCOPY_USE_BINARY_COPY],
++	       [test "$ARCH" = "arm" || test "$ARCH" = "riscv64" || test "$ARCH" = "aarch64" -a $GNU_EFI_VERSION -eq 0])
++
++# Ensure objcopy supports target=efi-app for x86 across the board(s) and aarch64 with gnu-efi > 3.0.15
++if test -z "$ARCH_IS_X86_TRUE" -a -z "$OBJCOPY_HAS_EFI_APP_TARGET" || test "$ARCH" = "aarch64" -a -z "$OBJCOPY_HAS_EFI_APP_TARGET" -a $GNU_EFI_VERSION -gt 0; then
++	AC_MSG_ERROR([objcopy doesn't support --target=efi-app but that is needed by gnu-efi])
+ fi
+-AM_CONDITIONAL([OBJCOPY_USE_EFI_APP_TARGET],
+-	       [test -n $OBJCOPY_HAS_EFI_APP_TARGET && test $GNU_EFI_VERSION -gt 0])
+ 
+ # Use --no-warn-rwx-segments for gnu-efi version 3.0.15
+ # on non-x86 architectures.
+-- 
+2.45.1
+

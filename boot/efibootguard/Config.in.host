@@ -1,0 +1,7 @@
+config BR2_TARGET_HOST_EFIBOOTGUARD
+	bool "host efibootguard"
+	select BR2_PACKAGE_HOST_CHECK
+	help
+	  Companion tools for efibootguard bootloader.
+
+	  https://github.com/siemens/efibootguard
