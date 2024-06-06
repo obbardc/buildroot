@@ -1,0 +1,88 @@
+# TODO: make a sample recipe
+# TODO: add name to maintainers
+
+config BR2_TARGET_EFIBOOTGUARD_ARCH_SUPPORTS
+	bool
+	#default y if BR2_i386
+	default y if BR2_x86_64
+	#default y if BR2_arm
+	#default y if BR2_aarch64
+	#default y if BR2_RISCV_64
+	depends on BR2_USE_MMU
+
+config BR2_TARGET_EFIBOOTGUARD
+	bool "efibootguard"
+	depends on BR2_TARGET_EFIBOOTGUARD_ARCH_SUPPORTS
+	depends on BR2_USE_WCHAR
+	select BR2_PACKAGE_CHECK
+	select BR2_PACKAGE_GNU_EFI
+	select BR2_PACKAGE_PCIUTILS
+	# TODO: is this OK ?
+	select BR2_PACKAGE_PYTHON_SHTAB
+	#select BR2_TARGET_EFIBOOTGUARD_ARM64_EFI if BR2_aarch64
+	help
+	  TODO write help
+
+	  https://github.com/siemens/efibootguard
+
+if BR2_TARGET_EFIBOOTGUARD
+
+#config BR2_TARGET_EFIBOOTGUARD_I386_EFI
+#	bool "i386-efi"
+#	depends on BR2_i386 || BR2_x86_64
+#	help
+#	  Select this option if the platform you're targetting has a
+#	  32 bits EFI BIOS. Note that some x86-64 platforms use a 32
+#	  bits EFI BIOS, and this option should be used in this case.
+
+config BR2_TARGET_EFIBOOTGUARD_X86_64
+	bool "x86-64"
+	depends on BR2_x86_64
+	help
+	  Select this option if the platform you're targetting has a
+	  64 bits EFI BIOS.
+
+#config BR2_TARGET_EFIBOOTGUARD_ARM_EFI
+#	bool "arm-efi"
+#	depends on BR2_TARGET_EFIBOOTGUARD_ARM_EFI
+#	help
+#	  Select this option if the platform you're targetting is an
+#	  ARM platform and you want to boot Grub 2 as an EFI
+#	  application.
+
+#config BR2_TARGET_EFIBOOTGUARD_ARM64_EFI
+#	bool "arm64-efi"
+#	depends on BR2_aarch64
+#	help
+#	  Select this option if the platform you're targetting is an
+#	  Aarch64 platform and you want to boot Grub 2 as an EFI
+#	  application.
+
+#config BR2_TARGET_EFIBOOTGUARD_RISCV64_EFI
+#	bool "riscv64-efi"
+#	depends on BR2_RISCV_64
+#	help
+#	  Select this option if the platform you're targetting is a
+#	  64bit RISC-V platform and you want to boot Grub 2 as an EFI
+#	  application.
+
+config BR2_TARGET_EFIBOOTGUARD_INSTALL_TOOLS
+	bool "install tools"
+	help
+	  Install support tools to interact with efibootguard
+	  boot loader.
+
+endif # BR2_TARGET_EFIBOOTGUARD
+
+#comment "efibootguard needs a toolchain w/ wchar"
+#	depends on BR2_TARGET_EFIBOOTGUARD_ARCH_SUPPORTS
+#	depends on !BR2_USE_WCHAR
+
+#config BR2_PACKAGE_HOST_EFIBOOTGUARD_TOOLS
+#	bool "host efibootguard tools"
+#	help
+#	  Companion tools for efibootguard bootloader.
+
+#if BR2_PACKAGE_HOST_EFIBOOTGUARD_TOOLS
+# TODO remove this section
+#endif # BR2_PACKAGE_HOST_EFIBOOTGUARD_TOOLS
