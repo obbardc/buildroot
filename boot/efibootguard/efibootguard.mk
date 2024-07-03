@@ -9,7 +9,7 @@
 # - target tools
 # - target library (should these be separate ?)
 
-EFIBOOTGUARD_VERSION = 0.17
+EFIBOOTGUARD_VERSION = 0.18
 EFIBOOTGUARD_SITE = $(call github,siemens,efibootguard,refs/tags/v$(EFIBOOTGUARD_VERSION))
 EFIBOOTGUARD_LICENSE = GPL-2.0+
 EFIBOOTGUARD_LICENSE_FILES = COPYING
