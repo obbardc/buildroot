@@ -706,7 +706,9 @@ F:	package/perl-time-parsedate/
 F:	package/perl-x10/
 
 N:	Christopher Obbard <obbardc@gmail.com>
+F:	board/pc-efibootguard/
 F:	boot/efibootguard/
+F:	configs/pc_x86_64_efibootguard_defconfig
 F:	package/dtui/
 F:	package/osslsigncode/
 

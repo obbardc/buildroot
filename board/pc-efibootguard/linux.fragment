@@ -1,0 +1,29 @@
+# Build the kernel with the EFI Stub.
+CONFIG_EFI=y
+CONFIG_EFI_STUB=y
+CONFIG_EFIVAR_FS=y
+CONFIG_EFI_PARTITION=y
+
+# EFI Boot Guard user-space tools (bg_printenv/bg_setenv) modifies FAT config
+# partitions.
+CONFIG_PARTITION_ADVANCED=y
+CONFIG_FAT_FS=y
+CONFIG_MSDOS_FS=y
+CONFIG_VFAT_FS=y
+CONFIG_NLS=y
+CONFIG_NLS_CODEPAGE_437=y
+CONFIG_NLS_ISO8859_1=y
+
+# Enable a text console on the framebuffer handed over by UEFI GOP.
+# On systems where the firmware exposes the boot display as a GOP framebuffer,
+# Linux registers it via sysfb/simple-framebuffer and simpledrm binds to it.
+# This includes QEMU/OVMF with the default emulated VGA display.
+CONFIG_SYSFB_SIMPLEFB=y
+CONFIG_DRM=y
+CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_FBDEV_EMULATION=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+
+# Enable the Intel 6300ESB watchdog driver (which can be emulated by QEMU).
+CONFIG_WATCHDOG=y
+CONFIG_I6300ESB_WDT=y
