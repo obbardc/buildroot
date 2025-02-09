@@ -1,5 +1,5 @@
 From 195d2dc85d6047fb40103418f4bb132b0d9fc93f Mon Sep 17 00:00:00 2001
-From: Christopher Obbard <chris.obbard@collabora.com>
+From: Christopher Obbard <christopher.obbard@linaro.org>
 Date: Thu, 13 Jun 2024 09:49:53 +0100
 Subject: [PATCH] Allow disabling autodetection of subunit library
 
@@ -14,7 +14,8 @@ is linked against other libraries, it can fail this check for subunit.
 Allow disabling the autodetection of subunit with a configure flag
 -DENABLE_SUBUNIT_EXT=OFF
 
-Signed-off-by: Christopher Obbard <chris.obbard@collabora.com>
+Upstream: https://github.com/libcheck/check/pull/353
+Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
 ---
  CMakeLists.txt | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
