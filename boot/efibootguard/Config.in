@@ -14,7 +14,6 @@ config BR2_TARGET_EFIBOOTGUARD
 	bool "efibootguard"
 	depends on BR2_TARGET_EFIBOOTGUARD_ARCH_SUPPORTS
 	depends on BR2_USE_WCHAR
-	select BR2_PACKAGE_CHECK
 	select BR2_PACKAGE_GNU_EFI
 	select BR2_PACKAGE_PCIUTILS
 	# TODO: is this OK ?

@@ -1,0 +1,91 @@
+From 3ea9a62cd439e6dd5bc5a9e08422a05aadf2d559 Mon Sep 17 00:00:00 2001
+From: Christopher Obbard <christopher.obbard@linaro.org>
+Date: Mon, 24 Feb 2025 16:09:51 +0000
+Subject: [PATCH] configure: allow tools/tests build to be disabled
+
+For some builds, e.g. inside a minimal distro, we may not want the tests
+to be built. Add an option --disable-tests to configure to disable building
+the tests.
+
+Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
+---
+ Makefile.am             |  9 ++++++++-
+ configure.ac            | 12 +++++++++++-
+ tools/tests/Makefile.am |  3 +++
+ 3 files changed, 22 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index bb97df2..160d211 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -369,8 +369,15 @@ clean-local-completion-pycache:
+ 
+ check-valgrind-local: $(GEN_VERSION_H)
+ 
++SUBDIRS = .
++
+ # Tests depend on libraries being built - start with "."
+-SUBDIRS = . tools/tests
++if BUILD_TESTS
++SUBDIRS += tools/tests
++endif
++
++# Include the tests always for distribution
++EXTRA_DIST = tools/tests
+ 
+ FORCE:
+ 
+diff --git a/configure.ac b/configure.ac
+index 36fc8d5..6bfc1ec 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -281,6 +281,12 @@ AS_IF([test "x$enable_completion" != "xno"],
+       ])
+ AM_CONDITIONAL([COMPLETION], [test "x$enable_completion" != "xno"])
+ 
++AC_ARG_ENABLE([tests],
++    [AS_HELP_STRING([--disable-tests], [Disable building tests])],
++    [], [enable_tests=yes])
++
++AM_CONDITIONAL([BUILD_TESTS], [test "x$enable_tests" != "xno"])
++
+ AX_VALGRIND_DFLT(memcheck, on)
+ AX_VALGRIND_DFLT(helgrind, off)
+ AX_VALGRIND_DFLT(drd, off)
+@@ -290,10 +296,14 @@ AX_VALGRIND_CHECK
+ # ------------------------------------------------------------------------------
+ AC_CONFIG_FILES([
+ 	Makefile
+-	tools/tests/Makefile
+ 	libebgenv.pc
+ ])
+ 
++# Only configure tools/tests/Makefile if tests are enabled
++if test "x$enable_tests" != "xno"; then
++    AC_CONFIG_FILES([tools/tests/Makefile])
++fi
++
+ AC_OUTPUT
+ AC_MSG_RESULT([
+ 	$PACKAGE_NAME $VERSION
+diff --git a/tools/tests/Makefile.am b/tools/tests/Makefile.am
+index d3fa536..7e3ac1e 100644
+--- a/tools/tests/Makefile.am
++++ b/tools/tests/Makefile.am
+@@ -11,6 +11,7 @@
+ #
+ # SPDX-License-Identifier:	GPL-2.0-only
+ #
++if BUILD_TESTS
+ 
+ OBJCOPY ?= objcopy
+ 
+@@ -110,3 +111,5 @@ test_fat_LDADD = $(FAT_TESTLIB) $(LIBCHECK_LIBS)
+ TESTS = $(check_PROGRAMS)
+ 
+ @VALGRIND_CHECK_RULES@
++
++endif
+-- 
+2.47.2
+

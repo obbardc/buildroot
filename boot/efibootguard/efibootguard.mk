@@ -15,7 +15,6 @@ EFIBOOTGUARD_LICENSE = GPL-2.0+
 EFIBOOTGUARD_LICENSE_FILES = COPYING
 
 EFIBOOTGUARD_DEPENDENCIES = \
-	check \
 	gnu-efi \
 	pciutils \
 	host-autoconf-archive
@@ -40,7 +39,8 @@ EFIBOOTGUARD_CONF_OPTS = \
 	--with-gnuefi-sys-dir=$(STAGING_DIR) \
 	--with-gnuefi-include-dir=$(STAGING_DIR)/usr/include/efi \
 	--with-gnuefi-lib-dir=$(STAGING_DIR)/usr/lib \
-	--disable-completion
+	--disable-completion \
+	--disable-tests
 
 # TODO: Instead we should try https://salsa.debian.org/debian/efibootguard/-/blob/master/debian/patches/always-override-stack-protector-variables-in-EFI-bui.patch?ref_type=heads
 EFIBOOTGUARD_CONF_ENV = \
@@ -52,8 +52,7 @@ define EFIBOOTGUARD_INSTALL_IMAGES_CMDS
 endef
 
 HOST_EFIBOOTGUARD_DEPENDENCIES = \
-	host-autoconf-archive \
-	host-check
+	host-autoconf-archive
 
 HOST_EFIBOOTGUARD_AUTORECONF = YES
 
@@ -62,7 +61,8 @@ HOST_EFIBOOTGUARD_AUTORECONF_OPTS = \
 
 HOST_EFIBOOTGUARD_CONF_OPTS = \
 	--disable-bootloader \
-	--disable-completion
+	--disable-completion \
+	--disable-tests
 
 $(eval $(autotools-package))
 $(eval $(host-autotools-package))
