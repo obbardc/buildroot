@@ -18,8 +18,7 @@ EFIBOOTGUARD_DEPENDENCIES = \
 	check \
 	gnu-efi \
 	pciutils \
-	host-autoconf-archive \
-	host-python-shtab
+	host-autoconf-archive
 
 # TODO Test BR2_TARGET_EFIBOOTGUARD_INSTALL_TOOLS=n
 ifeq ($(BR2_TARGET_EFIBOOTGUARD_INSTALL_TOOLS),y)
@@ -40,7 +39,8 @@ EFIBOOTGUARD_AUTORECONF_OPTS = \
 EFIBOOTGUARD_CONF_OPTS = \
 	--with-gnuefi-sys-dir=$(STAGING_DIR) \
 	--with-gnuefi-include-dir=$(STAGING_DIR)/usr/include/efi \
-	--with-gnuefi-lib-dir=$(STAGING_DIR)/usr/lib
+	--with-gnuefi-lib-dir=$(STAGING_DIR)/usr/lib \
+	--disable-completion
 
 # TODO: Instead we should try https://salsa.debian.org/debian/efibootguard/-/blob/master/debian/patches/always-override-stack-protector-variables-in-EFI-bui.patch?ref_type=heads
 EFIBOOTGUARD_CONF_ENV = \
@@ -61,7 +61,8 @@ HOST_EFIBOOTGUARD_AUTORECONF_OPTS = \
 	-I $(HOST_DIR)/share/autoconf-archive
 
 HOST_EFIBOOTGUARD_CONF_OPTS = \
-	--disable-bootloader
+	--disable-bootloader \
+	--disable-completion
 
 $(eval $(autotools-package))
 $(eval $(host-autotools-package))
