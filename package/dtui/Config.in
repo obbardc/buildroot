@@ -1,0 +1,10 @@
+config BR2_PACKAGE_DTUI
+	bool "dtui"
+	depends on BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS
+	select BR2_PACKAGE_HOST_RUSTC
+	help
+	  Small TUI for introspecting the state of the system/session
+	  D-Bus. It shows current services and lets you introspect
+	  objects and their interfaces.
+
+	  https://github.com/Troels51/dtui
