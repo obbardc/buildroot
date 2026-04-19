@@ -705,8 +705,10 @@ F:	package/perl-x10/
 
 N:	Christopher Obbard <obbardc@gmail.com>
 F:	board/pc-efibootguard/
+F:	board/pc-efibootguard-rauc/
 F:	boot/efibootguard/
 F:	configs/pc_x86_64_efibootguard_defconfig
+F:	configs/pc_x86_64_efibootguard_rauc_defconfig
 
 N:	Colin Foster <colin.foster@in-advantage.com>
 F:	package/python-tftpy/
