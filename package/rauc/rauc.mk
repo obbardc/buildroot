@@ -4,9 +4,9 @@
 #
 ################################################################################
 
-RAUC_VERSION = 1.15.2
-RAUC_SITE = https://github.com/rauc/rauc/releases/download/v$(RAUC_VERSION)
-RAUC_SOURCE = rauc-$(RAUC_VERSION).tar.xz
+RAUC_VERSION = wip/obbardc/bootchooser-efibootguard
+RAUC_SITE = https://github.com/obbardc/rauc.git
+RAUC_SITE_METHOD = git
 RAUC_LICENSE = LGPL-2.1
 RAUC_LICENSE_FILES = COPYING
 RAUC_CPE_ID_VENDOR = pengutronix
