@@ -708,6 +708,7 @@ F:	package/perl-x10/
 N:	Christopher Obbard <obbardc@gmail.com>
 F:	boot/efibootguard/
 F:	package/dtui/
+F:	package/osslsigncode/
 
 N:	Colin Foster <colin.foster@in-advantage.com>
 F:	package/python-tftpy/

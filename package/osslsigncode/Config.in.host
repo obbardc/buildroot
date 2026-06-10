@@ -1,0 +1,9 @@
+config BR2_PACKAGE_HOST_OSSLSIGNCODE
+	bool "host osslsigncode"
+	help
+	  osslsigncode is an OpenSSL-based Authenticode signing tool for
+	  PE, MSI, CAB and CAT files. It can be used at image assembly
+	  time to sign PE/EFI binaries (such as bootloaders and unified
+	  kernel images) for UEFI Secure Boot.
+
+	  https://github.com/mtrojnar/osslsigncode
