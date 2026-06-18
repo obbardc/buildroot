@@ -1,0 +1,9 @@
+config BR2_TARGET_HOST_UKIBOOT
+	bool "host ukiboot"
+	help
+      TODO
+	  Build EFI Boot Guard companion tools for the host. These
+	  can be used during image creation to inspect and
+	  modify the EFI Boot Guard configuration data.
+
+	  https://github.com/siemens/efibootguard

@@ -1,0 +1,30 @@
+config BR2_TARGET_UKIBOOT
+	bool "ukiboot"
+	depends on BR2_PACKAGE_GNU_EFI_ARCH_SUPPORTS
+	depends on BR2_USE_WCHAR
+	depends on BR2_TOOLCHAIN_USES_GLIBC
+	select BR2_PACKAGE_GNU_EFI
+	select BR2_PACKAGE_PCIUTILS
+	help
+	  EFI Boot Guard is a UEFI bootloader intended for robust
+	  A/B style updates. It arms a hardware watchdog before
+	  handing over control to the OS and supports a fail-safe
+	  boot mechanism to roll back if a boot attempt fails.
+
+	  https://github.com/siemens/efibootguard
+
+if BR2_TARGET_EFIBOOTGUARD
+
+config BR2_TARGET_EFIBOOTGUARD_INSTALL_TOOLS
+	bool "install tools"
+	help
+	  Install the EFI Boot Guard user-space tools (e.g.
+	  bg_printenv and bg_setenv) on the target. These tools
+	  allow reading and updating EFI Boot Guard configuration
+	  in user-space.
+
+endif # BR2_TARGET_EFIBOOTGUARD
+
+comment "efibootguard needs a glibc toolchain w/ wchar"
+	depends on BR2_PACKAGE_GNU_EFI_ARCH_SUPPORTS
+	depends on !BR2_USE_WCHAR || !BR2_TOOLCHAIN_USES_GLIBC
