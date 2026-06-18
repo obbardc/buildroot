@@ -26,6 +26,8 @@ source "boot/syslinux/Config.in"
 source "boot/ti-k3-boot-firmware/Config.in"
 source "boot/ti-k3-r5-loader/Config.in"
 source "boot/uboot/Config.in"
+source "boot/ukiboot/Config.in"
+source "boot/ukiboot/Config.in.host"
 source "boot/vexpress-firmware/Config.in"
 
 if BR2_TARGET_XILINX_FIRMWARE_ARCH_SUPPORTS
