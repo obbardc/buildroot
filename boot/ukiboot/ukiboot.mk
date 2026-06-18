@@ -56,3 +56,18 @@ UKIBOOT_INSTALL_IMAGES = YES
 
 $(eval $(meson-package))
 $(eval $(host-meson-package))
+
+
+# >>> ukiboot 0.2.1 Installing to target
+# GIT_DIR=. PATH="/home/obbardc/projects/git/buildroot/output/host/bin:/home/obbardc/projects/git/buildroot/output/host/sbin:/home/obbardc/.local/bin:/home/obbardc/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/obbardc/.local/bin:/home/obbardc/go/bin:/home/obbardc/.local/bin"  DESTDIR=/home/obbardc/projects/git/buildroot/output/target PYTHONNOUSERSITE=y /home/obbardc/projects/git/buildroot/output/host/bin/ninja  -C /home/obbardc/projects/git/buildroot/output/build/ukiboot-0.2.1//buildroot-build install
+# ninja: Entering directory `/home/obbardc/projects/git/buildroot/output/build/ukiboot-0.2.1//buildroot-build'
+# [0/1] Installing files
+# Installing slot_a.addon.efi to /home/obbardc/projects/git/buildroot/output/target/usr/libexec/ukiboot/efi
+# Installing slot_b.addon.efi to /home/obbardc/projects/git/buildroot/output/target/usr/libexec/ukiboot/efi
+# Installing ukibootctl to /home/obbardc/projects/git/buildroot/output/target/usr/bin
+# Installing efi/ukibootx64.efi to /home/obbardc/projects/git/buildroot/output/target/usr/libexec/ukiboot/efi
+# Installing /home/obbardc/projects/git/buildroot/output/build/ukiboot-0.2.1/buildroot-build/ukiboot-set-success.service to /home/obbardc/projects/git/buildroot/output/target/usr/lib/systemd/system
+
+
+
+# TODO: host is broken too
