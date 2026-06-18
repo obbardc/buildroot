@@ -11,27 +11,15 @@ UKIBOOT_SOURCE = ukiboot-$(UKIBOOT_VERSION).tar.bz2
 
 UKIBOOT_LICENSE = LGPL-2.1
 UKIBOOT_LICENSE_FILES = COPYING.LIB
-#UKIBOOT_CPE_ID_VENDOR = siemens
 
-#UKIBOOT_DEPENDENCIES = \
-#	gnu-efi \
-#	pciutils \
-#	host-autoconf-archive \
-#	host-pkgconf
+UKIBOOT_DEPENDENCIES = \
+	gnu-efi \
+	host-systemd
 
-#UKIBOOT_AUTORECONF = YES
-
-#UKIBOOT_AUTORECONF_OPTS = --include=$(HOST_DIR)/share/autoconf-archive
-
-#UKIBOOT_CONF_OPTS = \
-#	--with-gnuefi-sys-dir=$(STAGING_DIR) \
-#	--with-gnuefi-include-dir=$(STAGING_DIR)/usr/include/efi \
-#	--with-gnuefi-lib-dir=$(STAGING_DIR)/usr/lib \
-#	--disable-completion \
-#	--disable-tests
-
-#UKIBOOT_CONF_ENV = \
-#	LDFLAGS="$(LDFLAGS) -no-pie"
+UKIBOOT_CONF_OPTS = \
+	-Defi-includedir=$(STAGING_DIR)/usr/include/efi \
+	-Defi-libdir=$(STAGING_DIR)/usr/lib \
+	-Defi-ldsdir=$(STAGING_DIR)/usr/lib
 
 #ifeq ($(BR2_TARGET_UKIBOOT_INSTALL_TOOLS),y)
 #UKIBOOT_INSTALL_TARGET = YES
