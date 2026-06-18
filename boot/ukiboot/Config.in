@@ -13,9 +13,9 @@ config BR2_TARGET_UKIBOOT
 
 	  https://github.com/siemens/efibootguard
 
-if BR2_TARGET_EFIBOOTGUARD
+if BR2_TARGET_UKIBOOT
 
-config BR2_TARGET_EFIBOOTGUARD_INSTALL_TOOLS
+config BR2_TARGET_UKIBOOT_INSTALL_TOOLS
 	bool "install tools"
 	help
 	  Install the EFI Boot Guard user-space tools (e.g.
@@ -23,8 +23,8 @@ config BR2_TARGET_EFIBOOTGUARD_INSTALL_TOOLS
 	  allow reading and updating EFI Boot Guard configuration
 	  in user-space.
 
-endif # BR2_TARGET_EFIBOOTGUARD
+endif # BR2_TARGET_UKIBOOT
 
-comment "efibootguard needs a glibc toolchain w/ wchar"
+comment "ukiboot needs a glibc toolchain w/ wchar"
 	depends on BR2_PACKAGE_GNU_EFI_ARCH_SUPPORTS
 	depends on !BR2_USE_WCHAR || !BR2_TOOLCHAIN_USES_GLIBC
