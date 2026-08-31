@@ -3,6 +3,8 @@ config BR2_PACKAGE_DTUI
 	depends on BR2_PACKAGE_HOST_RUSTC_TARGET_ARCH_SUPPORTS
 	depends on BR2_TOOLCHAIN_HAS_THREADS # dbus
 	depends on BR2_USE_MMU # dbus
+	# tui-textarea unconditionally uses AtomicU64
+	depends on BR2_PACKAGE_HOST_RUSTC_TARGET_HAS_ATOMIC_64
 	select BR2_PACKAGE_DBUS # runtime
 	select BR2_PACKAGE_HOST_RUSTC
 	help
